@@ -83,7 +83,17 @@
         </div>
         <div class="row">
             <div class="col-md-5 serachBox">
-                <div class="searchTitle">East Legon, Accra</div>
+                <div class="searchTitle"><form style="margin: 0px; padding: 0px;">
+
+
+<!-- Select Basic -->
+ <select id="selectbasic" name="selectbasic" class="form-control">
+      <option value="">Select Town</option>
+      <option value="1">East Legon</option>
+      <option value="2">Ofankor</option>
+    </select>
+
+</form></div>
 
                 <div class="btn-toolbar nomobile"  style="margin-bottom: 0.5em; margin-top: 0.5em;">
                     <div class="btn-grooop"  style="margin-left: 0; margin: 0 auto;">
@@ -304,28 +314,33 @@
             map.attributionControl.addAttribution('Map Data &copy; <a href="http://www.ghanalap.gov.gh/index.php/">Ghana Lands Commission</a>');
 
 
-            var legend = L.control({
-                position: 'bottomright'
-            });
+            var legend = L.control({position: 'bottomright'});  
+    legend.onAdd = function (map) {
 
-            legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = ["residential", "commercial", "mixed","industrial","institutional","other","unknown", "vacant","parking", "park"  ],
+        mycolors = ["#b30059", "#5073e6", "#e6e620", "#5c00b3", "#2db802", "#0074b3", "gold", "#e66c15", "#e3e6e1", "red"],
+        labels = ['<strong> Legend </strong>'],
+        from, to;
 
 
-                var div = L.DomUtil.create('div', 'info legend'),
-                        grades = ["#b30059", "#5073e6", "0074b3", "#2db802", "#5c00b3", "gold", "#e3e6e1", "red"]
+    for (var i = 0; i < grades.length; i++) {
+        from = grades [i];
+        //to = grades[i+1]-1;
+
+    labels.push(
+        '<i style="background:'+mycolors [i] + '"></i> ' +
+        from );
+        }
+        div.innerHTML = labels.join('<br>');
+        return div;
 
 
-                for (var i = 0; i < grades.length; i++) {
-                    from = grades[i];
+        };
 
-                    labels.push('<i style="background:' + getColor(from + 1) + '"></i>');
-                }
+    
 
-                div.innerHTML = labels.join('<br>');
-                return div;
-            };
-
-            legend.addTo(map);
+legend.addTo(map);
 
 
             //Tabs Settings
