@@ -219,16 +219,26 @@
 
 //Map
 
+ var grayscale = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoibi1xdWJlIiwiYSI6ImNpbzJya2p3czAwem53ZGx5YmZxZjkxcXMifQ.7U8BvCm75GU1Q4orDPTYwA', {id: 'mapbox.light', attribution: 'Map &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> , ' +
+                        'Imagery © <a href="http://mapbox.com">Mapbox</a>'}),
+                satellite = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoibi1xdWJlIiwiYSI6ImNpbzJya2p3czAwem53ZGx5YmZxZjkxcXMifQ.7U8BvCm75GU1Q4orDPTYwA', {id: 'mapbox.satellite', attribution: 'Map &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> , ' +
+                        'Imagery © <a href="http://mapbox.com">Mapbox</a>'}),
+                streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoibi1xdWJlIiwiYSI6ImNpbzJya2p3czAwem53ZGx5YmZxZjkxcXMifQ.7U8BvCm75GU1Q4orDPTYwA', {id: 'mapbox.streets', attribution: 'Map &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> , ' +
+                        'Imagery © <a href="http://mapbox.com">Mapbox</a>'});
 
-var map = L.map('mapHolder').setView([5.629265210427313, -0.165195452969745,], 15);
+            var map = L.map('mapHolder', {
+                center: [5.629265210427313, -0.165195452969745],
+                zoom: 15,
+                layers: [grayscale]
+            });
 
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
-  
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-        'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    id: 'mapbox.light'
-}).addTo(map);
+            var baseMaps = {
+                "Grayscale": grayscale,
+                "Streets": streets,
+                "Satellite": satellite
+            };
+            
+            L.control.layers(baseMaps).addTo(map);
 
 
 
@@ -257,16 +267,16 @@ info.addTo(map);
 // get color depending on population density value
 function getColor(d) {
 	
-	if(d == "occupied" ){
+	if(d === "occupied" ){
 		return "#b30059";exit;	
 	}
-		if(d == "unoccupied" ){
+		if(d === "unoccupied" ){
 		return "#5073e6";exit;	
 	}
-		if(d == "maybe" ){
+		if(d === "maybe" ){
 		return "#e6e620";exit;	
 	}
-		if(d == "partial" ){
+		if(d === "partial" ){
 		return "#5c00b3";exit;	
 	}
 				   
